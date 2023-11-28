@@ -3,7 +3,7 @@
 
 ## Overview
 
-Molecular machine learning algorithms are becoming increasingly powerful with increasing data availability. However, much of the currently available biological data is inexact ("Less than and greater than gators") and inaccessible to traditional regression algorithms. Pairing regression datapoints and comparing potency values can leverage this inexact data for classification. We present a machine learning approach (DeltaClassifier) to directly train upon and learn molecular changes to classify molecular improvements. Across 230 small ChEMBL datasets of IC50 values, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches when collapsed to classifications for the prediction of molecular improvements.   
+Much of the currently available biological data is inexact ("less than and greater than gators") and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this inexact data for classification. We present DeltaClassifier, a machine learning method that directly trains upon and learns molecular changes to classify molecular improvements leveraging these inexact datapoints. Across 230 small IC50 datasets, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches for the prediction of molecular improvements.   
 
 ## Requirements
 * [RDKit](https://www.rdkit.org/docs/Install.html)
@@ -14,6 +14,7 @@ Molecular machine learning algorithms are becoming increasingly powerful with in
 Comparison Models
 * [Random Forest](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
 * [ChemProp v1.5.2](https://github.com/chemprop/chemprop)
+* [XGBoost](https://xgboost.readthedocs.io/en/stable/gpu/index.html)
 
 Given the larger size of delta datasets, we recommend using a GPU for significantly faster training.
 
@@ -28,11 +29,11 @@ To use ChemProp with GPUs, you will need:
 
 ### Code
 
-Python code for evaluating DeltaClassifer and traditional models based on their ability to classify potency differences between two molecules.
+Python code for evaluating DeltaClassifers and traditional models based on their ability to classify potency differences between two molecules.
 
 ### Datasets
 
-230 curated benchmarking training sets for potency prediction from [ChEMBL](https://www.ebi.ac.uk/chembl/).
+230 curated training sets for potency prediction from [ChEMBL](https://www.ebi.ac.uk/chembl/).
 
 ### Results
 
