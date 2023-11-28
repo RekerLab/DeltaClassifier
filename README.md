@@ -3,7 +3,7 @@
 
 ## Overview
 
-Molecular machine learning algorithms are becoming increasingly powerful with increasing data availability. However, much of the currently available biological data is inexact and inaccessible to traditional regression algorithms. Pairing regression datapoints and comparing potency values can leverage this inexact data for classification. We present a machine learning approach (DeltaClassifier) to directly train upon and learn molecular changes to classify molecular improvements. Across 230 small ChEMBL datasets of IC50 values, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches when collapsed to classifications for the prediction of molecular improvements.   
+Molecular machine learning algorithms are becoming increasingly powerful with increasing data availability. However, much of the currently available biological data is inexact ("Less than and greater than gators") and inaccessible to traditional regression algorithms. Pairing regression datapoints and comparing potency values can leverage this inexact data for classification. We present a machine learning approach (DeltaClassifier) to directly train upon and learn molecular changes to classify molecular improvements. Across 230 small ChEMBL datasets of IC50 values, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches when collapsed to classifications for the prediction of molecular improvements.   
 
 ## Requirements
 * [RDKit](https://www.rdkit.org/docs/Install.html)
