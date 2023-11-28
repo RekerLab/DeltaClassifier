@@ -1,0 +1,28 @@
+## Cross Validation Results
+
+#### ChemProp50
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for ChemProp with 50 epochs.
+
+#### DeepDeltaClassifier5
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on demilitarized data.
+
+#### DeepDeltaClassifier5AllData
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on all data.
+
+#### DeepDeltaClassifier5OnlyExact
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on only exact data.
+
+#### DeltaClassifierLite
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeltaClassifierLite trained on demilitarized data.
+
+#### DeltaClassifierLiteAllData
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeltaClassifierLite trained on all data.
+
+#### DeltaClassifierLiteOnlyExact
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeltaClassifierLite trained on only exact data.
+
+#### RandomForest
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for Random Forest.
+
+#### XGBoost
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for XGBoost.
