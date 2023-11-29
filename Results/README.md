@@ -6,10 +6,10 @@
 #### DeepDeltaClassifier5
 * Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on demilitarized data.
 
-#### DeepDeltaClassifier5AllData
+#### DeepDeltaClassifierAllData5
 * Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on all data.
 
-#### DeepDeltaClassifier5OnlyExact
+#### DeepDeltaClassifierOnlyExact5
 * Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier with 5 epochs trained on only exact data.
 
 #### DeltaClassifierLite
