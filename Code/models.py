@@ -17,7 +17,7 @@ from xgboost import XGBRegressor
 
 
 # Define abstract class to define interface of models
-class AbstractModel(metaclass=abc.ABCMeta):
+class abstractDeltaModel(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def fit(self, x, y):
@@ -165,7 +165,7 @@ class Trad_XGBoost(abstractDeltaModel):
         return "XGBoost"
         
 
-class DeltaClassifierLiteOnlyEquals(AbstractModel):
+class DeltaClassifierLiteOnlyEquals(abstractDeltaModel):
     model = None
 
     def __init__(self):
@@ -187,7 +187,7 @@ class DeltaClassifierLiteOnlyEquals(AbstractModel):
         
         
 
-class DeltaClassifierLite(AbstractModel):
+class DeltaClassifierLiteAllData(abstractDeltaModel):
     model = None
 
     def __init__(self):
@@ -205,10 +205,10 @@ class DeltaClassifierLite(AbstractModel):
         return predictions
 
     def __str__(self):
-        return "DeltaClassifierLite"
+        return "DeltaClassifierLiteAllData"
 
 
-class XGBoost_DeltaClassifier_DM(AbstractModel):
+class DeltaClassifierLite(abstractDeltaModel):
     model = None
 
     def __init__(self):
@@ -226,10 +226,10 @@ class XGBoost_DeltaClassifier_DM(AbstractModel):
         return predictions
 
     def __str__(self):
-        return "XGBoost_DM01"
+        return "DeltaClassifierLite"
 
 
-class DeepDeltaClassifierOnlyEquals(AbstractModel):
+class DeepDeltaClassifierOnlyEquals(abstractDeltaModel):
     epochs = None
     dirpath = None
     dirpath_single = None
@@ -303,7 +303,7 @@ class DeepDeltaClassifierOnlyEquals(AbstractModel):
 
 
 
-class DeepDeltaClassifierAllData(AbstractModel):
+class DeepDeltaClassifierAllData(abstractDeltaModel):
     epochs = None
     dirpath = None
     dirpath_single = None
@@ -377,7 +377,7 @@ class DeepDeltaClassifierAllData(AbstractModel):
 
 
 
-class DeepDeltaClassifier(AbstractModel):
+class DeepDeltaClassifier(abstractDeltaModel):
     epochs = None
     dirpath = None
     dirpath_single = None
@@ -717,19 +717,21 @@ def classify_improvement_XGBoost(data): # Specific version for XGBoost-based mod
 
 
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
-def classify_improvement_XGBoost_only_equals(data): # Specific version to only train on the absolute values for XGBoost-based models
+def classify_improvement_XGBoost_only_equals(data): # Specific version to only train on the absolute values for XGBoost based models
   data2 = pd.merge(data, data, how='cross') # Make Pairs
-  data3 = pd.DataFrame(columns=['SMILES_x', 'SMILES_y', 'Y'], index=range(len(data2))) # For final results
+  data3 = pd.DataFrame(columns=['fps', 'Y'], index=range(len(data2))) # For final results
 
   for i in range(len(data2)):
     if data2['Relation_x'][i] == '=' and data2['Relation_y'][i] == '=':
       if data2['Value_x'][i] < data2['Value_y'][i]:
-        data3["SMILES_x"][i] =  data2['SMILES_x'][i]
-        data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        fps_x =  AllChem.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(data2['SMILES_x'][i]), 2)
+        fps_y =  AllChem.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(data2['SMILES_y'][i]), 2)
+        data3['fps'][i] =  np.append(fps_x, fps_y)
         data3['Y'][i] = 1 # Datapoint 2 is better
       else:
-        data3["SMILES_x"][i] =  data2['SMILES_x'][i]
-        data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        fps_x =  AllChem.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(data2['SMILES_x'][i]), 2)
+        fps_y =  AllChem.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(data2['SMILES_y'][i]), 2)
+        data3['fps'][i] =  np.append(fps_x, fps_y)
         data3['Y'][i] = 0 # Datapoint 2 is worse
     else:
       continue # Unsure which datapoint is better - don't keep pair
@@ -828,7 +830,7 @@ def classify_improvement_XGBoost_DM(data): # Specific version for XGBoost-based 
   
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
 # This version specifically gives predictive confidence based on how large the differences are
-def classify_improvement_CTRL_normalized(data): 
+def classify_improvement_CTRL_normalized(data): # Used for the Random Forest, ChemProp, and XGBoost models
   data2 = pd.merge(data, data, how='cross') # Make Pairs
   data3 = pd.DataFrame(columns=['Predictions'], index=range(len(data2))) # For final results
 

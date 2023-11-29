@@ -322,4 +322,4 @@ for prop in properties:
     results = pd.DataFrame({'model': [model], 'accuracy': [results[0]],
                             'f1': [results[1]], 'rocauc': [results[2]]})
 
-    results.to_csv("{}-DeepDeltaClassifier-Metrics.csv".format(prop, model), index = False)
+    results.to_csv("{}-{}-Metrics.csv".format(prop, model), index = False)
