@@ -367,7 +367,7 @@ properties = ["CHEMBL4561",
 
 models = ['RandomForest', 'ChemProp50', 'XGBoost', 
           'DeltaClassifierLiteOnlyEquals', 'DeltaClassifierLiteAllData', 'DeltaClassifierLite', 
-          'DeepDeltaClassifierOnlyEquals', 'DeepDeltaClassifierAllData', 'DeepDeltaClassifier']
+          'DeepDeltaClassifierOnlyEquals5', 'DeepDeltaClassifierAllData5', 'DeepDeltaClassifier5']
 
 for model in models:
 
@@ -376,7 +376,7 @@ for model in models:
     all_scores_Gatorless = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC']) 
 
     # Evaluate scoring without same molecular pairs for all Datasets
-    for name in datasets:
+    for name in properties:
         dataframe = pd.read_csv("../Datasets/{}-Curated.csv".format(name))
         predictions = pd.read_csv('../Results/{}/{}_{}_1.csv'.format(model, name, model)).T 
         predictions.columns =['True', 'Delta']
