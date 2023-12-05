@@ -23,15 +23,17 @@ from imblearn.metrics import sensitivity_specificity_support
 
 
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
-def classify_improvement_keep_relation_keep_values(data): # Specific version that also keeps relations and true values
+def classify_improvement_scaffolds_keep_relation_keep_values(data): # Specific version that also keeps relations and true values
   data2 = pd.merge(data, data, how='cross') # Make Pairs
-  data3 = pd.DataFrame(columns=['SMILES_x', 'SMILES_y', 'Value_x', 'Value_y', 'Relation_x', 'Relation_y', 'Y'], index=range(len(data2))) # For final results
+  data3 = pd.DataFrame(columns=['SMILES_x', 'SMILES_y', 'Scaffold_x', 'Scaffold_y', 'Value_x', 'Value_y', 'Relation_x', 'Relation_y', 'Y'], index=range(len(data2))) # For final results
 
   for i in range(len(data2)):
     if data2['Relation_x'][i] == '=' and data2['Relation_y'][i] == '=':
       if data2['Value_x'][i] < data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -40,6 +42,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       else:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -50,6 +54,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] < data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -62,6 +68,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] > data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -74,6 +82,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] > data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -89,6 +99,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] > data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -101,6 +113,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] < data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -113,6 +127,8 @@ def classify_improvement_keep_relation_keep_values(data): # Specific version tha
       if data2['Value_x'][i] < data2['Value_y'][i]:
         data3["SMILES_x"][i] =  data2['SMILES_x'][i]
         data3["SMILES_y"][i] =  data2['SMILES_y'][i]
+        data3["Scaffold_x"][i] =  data2['Scaffold_x'][i]
+        data3["Scaffold_y"][i] =  data2['Scaffold_y'][i]
         data3["Value_x"][i] =  data2['Value_x'][i]
         data3["Value_y"][i] =  data2['Value_y'][i]
         data3["Relation_x"][i] =  data2['Relation_x'][i]
@@ -374,6 +390,11 @@ for model in models:
     all_scores_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
     all_scores_no_same_molecule_pairs = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])    
     all_scores_Gatorless = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC']) 
+    nonmatching_scaffolds = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
+    matching_scaffolds = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])    
+    nonmatching_scaffolds_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
+    matching_scaffolds_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
+
 
     # Evaluate scoring without same molecular pairs for all Datasets
     for name in properties:
@@ -382,12 +403,15 @@ for model in models:
         predictions.columns =['True', 'Delta']
 
         mols = [Chem.MolFromSmiles(s) for s in dataframe.SMILES]
-        data = pd.DataFrame(data={'SMILES': mols, 'Relation': dataframe['Relation'], 'Value': dataframe['Value']})
+        scaffolds = [Chem.MolToSmiles(MurckoScaffold.GetScaffoldForMol(m)) for m in mols]
+        data = pd.DataFrame(data={'SMILES': mols, 'Scaffold': scaffolds, 'Relation': dataframe['Relation'], 'Value': dataframe['Value']})
 
         # Emulate previous train-test splits (Only need the test split so the train will be ignored)
         cv = KFold(n_splits=10, random_state=1, shuffle=True)
         datapoint_x = []
         datapoint_y = []
+        scaffold_x = []
+        scaffold_y = []
         Relation_x = []
         Relation_y = []
         Value_x = []
@@ -395,9 +419,11 @@ for model in models:
 
         for train_index, test_index in cv.split(data):
             test_df = data[data.index.isin(test_index)]
-            pair_subset_test = classify_improvement_keep_relation_keep_values(test_df)
+            pair_subset_test = classify_improvement_scaffolds_keep_relation_keep_values(test_df)
             datapoint_x += [pair_subset_test.SMILES_x]
             datapoint_y += [pair_subset_test.SMILES_y]
+            scaffold_x += [pair_subset_test.Scaffold_x]
+            scaffold_y += [pair_subset_test.Scaffold_y]
             Value_x += [pair_subset_test.Value_x]
             Value_y += [pair_subset_test.Value_y]
             Relation_x += [pair_subset_test.Relation_x]
@@ -405,6 +431,7 @@ for model in models:
 
 
         datapoints = pd.DataFrame(data={'SMILES_X':  np.concatenate(datapoint_x), 'SMILES_Y':  np.concatenate(datapoint_y),
+                                        'Scaffold_x':  np.concatenate(scaffold_x), 'Scaffold_y':  np.concatenate(scaffold_y),
                                         'Value_x':  np.concatenate(Value_x), 'Value_y':  np.concatenate(Value_y),
                                         'Relation_x':  np.concatenate(Relation_x), 'Relation_y':  np.concatenate(Relation_y)})
 
@@ -460,6 +487,66 @@ for model in models:
         all_scores_Gatorless = pd.concat([all_scores_Gatorless, scoring])
 
 
+        # Only keep nonmatching scaffolds
+        nonmatching = datapoints[datapoints['Scaffold_x'] != datapoints['Scaffold_y']]
+
+        # Run Stats
+        Accuracy = accuracy(nonmatching["True"], (nonmatching['DeltaClass']))
+        F1 = f1_score(nonmatching["True"], (nonmatching['DeltaClass']))
+        AUC = rocauc(nonmatching["True"], (nonmatching['Delta']))
+
+        scoring = pd.DataFrame({'Dataset': [name],
+                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
+
+        nonmatching_scaffolds = pd.concat([nonmatching_scaffolds, scoring])
+
+
+        # Only keep matching scaffolds
+        matching = datapoints[datapoints['Scaffold_x'] != datapoints['Scaffold_y']]
+
+        # Run Stats
+        Accuracy = accuracy(matching["True"], (matching['DeltaClass']))
+        F1 = f1_score(matching["True"], (matching['DeltaClass']))
+        AUC = rocauc(matching["True"], (matching['Delta']))
+
+        scoring = pd.DataFrame({'Dataset': [name],
+                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
+
+        matching_scaffolds = pd.concat([matching_scaffolds, scoring])
+
+        # Only keep demilitarized nonmatching scaffolds
+        nonmatching_demilitarized = demilitarized[demilitarized['Scaffold_x'] != demilitarized['Scaffold_y']]
+
+        # Run Stats
+        Accuracy = accuracy(nonmatching_demilitarized["True"], (nonmatching_demilitarized['DeltaClass']))
+        F1 = f1_score(nonmatching_demilitarized["True"], (nonmatching_demilitarized['DeltaClass']))
+        AUC = rocauc(nonmatching_demilitarized["True"], (nonmatching_demilitarized['Delta']))
+
+        scoring = pd.DataFrame({'Dataset': [name],
+                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
+
+        nonmatching_scaffolds_demilitarized = pd.concat([nonmatching_scaffolds_demilitarized, scoring])
+
+
+        # Only keep demilitarized matching scaffolds
+        matching_demilitarized = demilitarized[demilitarized['Scaffold_x'] != demilitarized['Scaffold_y']]
+
+        # Run Stats
+        Accuracy = accuracy(matching_demilitarized["True"], (matching_demilitarized['DeltaClass']))
+        F1 = f1_score(matching_demilitarized["True"], (matching_demilitarized['DeltaClass']))
+        AUC = rocauc(matching_demilitarized["True"], (matching_demilitarized['Delta']))
+
+        scoring = pd.DataFrame({'Dataset': [name],
+                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
+
+        matching_scaffolds_demilitarized = pd.concat([matching_scaffolds_demilitarized, scoring])
+
+
+
     all_scores_demilitarized.to_csv("{}_Demilitarized.csv".format(model), index = False) # Save general demilitarized results
     all_scores_no_same_molecule_pairs.to_csv("{}_No_SMP.csv".format(model), index = False) # Save results with no same molecule pairs
     all_scores_Gatorless.to_csv("{}_No_SMP_Gatorless.csv".format(model), index = False) # Save gatorless (only exact) results with no same molecule pairs
+    nonmatching_scaffolds.to_csv("{}_nonmatching_scaffolds.csv".format(model), index = False) # Save Non-matching Scaffolds
+    matching_scaffolds.to_csv("{}_matching_scaffolds.csv".format(model), index = False) # Save matching Scaffolds
+    nonmatching_scaffolds_demilitarized.to_csv("{}_nonmatching_scaffolds_demilitarized.csv".format(model), index = False) # Save Non-matching Scaffolds following demilitarization
+    matching_scaffolds_demilitarized.to_csv("{}_matching_scaffolds_demilitarized.csv".format(model), index = False) # Save matching Scaffolds following demilitarization
