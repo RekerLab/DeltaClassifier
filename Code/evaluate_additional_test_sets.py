@@ -389,9 +389,7 @@ for model in models:
 
     all_scores_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
     all_scores_no_same_molecule_pairs = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])    
-    all_scores_Gatorless = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC']) 
-    nonmatching_scaffolds = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
-    matching_scaffolds = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])    
+    all_scores_Gatorless = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])    
     nonmatching_scaffolds_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
     matching_scaffolds_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC'])
     all_scores_Gatorless_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC']) 
@@ -488,33 +486,6 @@ for model in models:
         all_scores_Gatorless = pd.concat([all_scores_Gatorless, scoring])
 
 
-        # Only keep nonmatching scaffolds
-        nonmatching = datapoints[datapoints['Scaffold_x'] != datapoints['Scaffold_y']]
-
-        # Run Stats
-        Accuracy = accuracy(nonmatching["True"], (nonmatching['DeltaClass']))
-        F1 = f1_score(nonmatching["True"], (nonmatching['DeltaClass']))
-        AUC = rocauc(nonmatching["True"], (nonmatching['Delta']))
-
-        scoring = pd.DataFrame({'Dataset': [name],
-                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
-
-        nonmatching_scaffolds = pd.concat([nonmatching_scaffolds, scoring])
-
-
-        # Only keep matching scaffolds
-        matching = datapoints[datapoints['Scaffold_x'] == datapoints['Scaffold_y']]
-
-        # Run Stats
-        Accuracy = accuracy(matching["True"], (matching['DeltaClass']))
-        F1 = f1_score(matching["True"], (matching['DeltaClass']))
-        AUC = rocauc(matching["True"], (matching['Delta']))
-
-        scoring = pd.DataFrame({'Dataset': [name],
-                                'Accuracy': [round(Accuracy, 4)], 'F1': [round(F1, 4)], 'AUC': [round(AUC, 4)]})
-
-        matching_scaffolds = pd.concat([matching_scaffolds, scoring])
-
         # Only keep demilitarized nonmatching scaffolds
         nonmatching_demilitarized = demilitarized[demilitarized['Scaffold_x'] != demilitarized['Scaffold_y']]
 
@@ -560,8 +531,6 @@ for model in models:
     all_scores_demilitarized.to_csv("{}_Demilitarized.csv".format(model), index = False) # Save general demilitarized results
     all_scores_no_same_molecule_pairs.to_csv("{}_No_SMP.csv".format(model), index = False) # Save results with no same molecule pairs
     all_scores_Gatorless.to_csv("{}_No_SMP_Gatorless.csv".format(model), index = False) # Save gatorless (only exact) results with no same molecule pairs
-    nonmatching_scaffolds.to_csv("{}_nonmatching_scaffolds.csv".format(model), index = False) # Save Non-matching Scaffolds
-    matching_scaffolds.to_csv("{}_matching_scaffolds.csv".format(model), index = False) # Save matching Scaffolds
     nonmatching_scaffolds_demilitarized.to_csv("{}_nonmatching_scaffolds_demilitarized.csv".format(model), index = False) # Save Non-matching Scaffolds following demilitarization
     matching_scaffolds_demilitarized.to_csv("{}_matching_scaffolds_demilitarized.csv".format(model), index = False) # Save matching Scaffolds following demilitarization
     all_scores_Gatorless_demilitarized.to_csv("{}_demilitarized_Gatorless.csv".format(model), index = False) # Save gatorless (only exact) results with demilitarization
