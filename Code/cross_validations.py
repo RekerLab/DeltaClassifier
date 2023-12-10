@@ -302,24 +302,25 @@ models = [Trad_RandomForest(), Trad_ChemProp(), Trad_XGBoost(),
 
 for prop in properties:
   for model in models:
-    dataset = '../Datasets/{}-Curated.csv'.format(prop)
-    results = cross_validation_file(data_path=dataset, prop = prop, model=model, k=10, seed = 1)
+    for i in range(1,4): # 3 repeats of cross-validation
+        dataset = '../Datasets/{}-Curated.csv'.format(prop)
+        results = cross_validation_file(data_path=dataset, prop = prop, model=model, k=10, seed = i)
 
-    pd.DataFrame(results).to_csv("{}_{}_{}.csv".format(prop, str(model), 1), index=False)
-    # If you .T the dataframe, then the first column is ground truth, the second is predictions
+        pd.DataFrame(results).to_csv("{}_{}_{}.csv".format(prop, str(model), i), index=False)
+        # If you .T the dataframe, then the first column is ground truth, the second is predictions
 
-    df = pd.read_csv("{}_{}_{}.csv".format(prop, model, 1)).T
-    df.columns =['True', 'Pred']
-    trues = df['True'].tolist()
-    preds = df['Pred'].tolist()
+        df = pd.read_csv("{}_{}_{}.csv".format(prop, model, i)).T
+        df.columns =['True', 'Pred']
+        trues = df['True'].tolist()
+        preds = df['Pred'].tolist()
 
-    # Get Additional Metrics for the Models
-    results = pd.DataFrame(columns=['model', 'accuracy', 'f1','rocauc'])
-    preds2 = df["Pred"] > 0.5 # Get the binary predictions instead of predicted probability
-    trues2 = df["True"] > 0.5 # Get the binary values for the classification problem
-    results = evaluate(preds2, trues2, df["Pred"]) # Calculate accuracy, f1 score, and rocauc scores 
+        # Get Additional Metrics for the Models
+        results = pd.DataFrame(columns=['model', 'accuracy', 'f1','rocauc'])
+        preds2 = df["Pred"] > 0.5 # Get the binary predictions instead of predicted probability
+        trues2 = df["True"] > 0.5 # Get the binary values for the classification problem
+        results = evaluate(preds2, trues2, df["Pred"]) # Calculate accuracy, f1 score, and rocauc scores 
 
-    results = pd.DataFrame({'model': [model], 'accuracy': [results[0]],
-                            'f1': [results[1]], 'rocauc': [results[2]]})
+        results = pd.DataFrame({'model': [model], 'accuracy': [results[0]],
+                                'f1': [results[1]], 'rocauc': [results[2]]})
 
-    results.to_csv("{}-{}-Metrics.csv".format(prop, model), index = False)
+        results.to_csv("{}-{}-Metrics-{}.csv".format(prop, model, i), index = False)

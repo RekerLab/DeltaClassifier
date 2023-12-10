@@ -398,7 +398,7 @@ for model in models:
     # Evaluate scoring without same molecular pairs for all Datasets
     for name in properties:
         dataframe = pd.read_csv("../Datasets/{}-Curated.csv".format(name))
-        predictions = pd.read_csv('../Results/{}/{}_{}_1.csv'.format(model, name, model)).T 
+        predictions = pd.read_csv('../Results/{}/{}_1/{}_{}_1.csv'.format(model, model, name, model)).T 
         predictions.columns =['True', 'Delta']
 
         mols = [Chem.MolFromSmiles(s) for s in dataframe.SMILES]
