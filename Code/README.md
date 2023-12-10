@@ -1,7 +1,7 @@
 ## Code for Model Evaluation
 
 #### cross_validations.py
-* Test model performance using 1x10-fold cross-validation on 230 benchmarking datasets.
+* Test model performance using 3x10-fold cross-validation on 230 benchmarking datasets.
 
 #### evaluate_additional_test_sets.py
 * Evaluate model performance on test sets with demilitarization, removal of same molecule pairs, or removal of inexact values in test sets.
