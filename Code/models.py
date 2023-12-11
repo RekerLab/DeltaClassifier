@@ -382,7 +382,7 @@ class DeepDeltaClassifier(abstractDeltaModel):
     dirpath = None
     dirpath_single = None
 
-    def __init__(self, epochs=1, dirpath = None, dirpath_single = None): 
+    def __init__(self, epochs=5, dirpath = None, dirpath_single = None): 
         self.epochs = epochs
         self.dirpath = dirpath
         self.dirpath_single = dirpath_single
