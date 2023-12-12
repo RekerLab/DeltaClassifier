@@ -61,10 +61,6 @@ def evaluate(pred_vals,true_vals,pred_prob): # Calculate accuracy, f1 score, and
 	rocauc(true_vals,pred_prob)]
 
 
-###############
-### 1x10 CV ###
-###############
-
 properties = ["CHEMBL4561",
 "CHEMBL202",
 "CHEMBL217",
@@ -296,9 +292,47 @@ properties = ["CHEMBL4561",
 "CHEMBL1293269",
 "CHEMBL2189121"]
 
-models = [Trad_RandomForest(), Trad_ChemProp(), Trad_XGBoost(), 
-          DeltaClassifierLiteOnlyEquals(), DeltaClassifierLiteAllData(), DeltaClassifierLite(), 
+
+############################################################
+### Training Optimization for DeltaClassifiers - 1x10 CV ###
+############################################################
+
+
+models = [DeltaClassifierLiteOnlyEquals(), DeltaClassifierLiteAllData(), DeltaClassifierLite(), 
           DeepDeltaClassifierOnlyEquals(), DeepDeltaClassifierAllData(), DeepDeltaClassifier()]
+
+for prop in properties:
+  for model in models:
+    dataset = '../Datasets/{}-Curated.csv'.format(prop)
+    results = cross_validation_file(data_path=dataset, prop = prop, model=model, k=10, seed = 1)
+
+    pd.DataFrame(results).to_csv("{}_{}_{}.csv".format(prop, str(model), 1), index=False)
+    # If you .T the dataframe, then the first column is ground truth, the second is predictions
+
+    df = pd.read_csv("{}_{}_{}.csv".format(prop, model, 1)).T
+    df.columns =['True', 'Pred']
+    trues = df['True'].tolist()
+    preds = df['Pred'].tolist()
+
+    # Get Additional Metrics for the Models
+    results = pd.DataFrame(columns=['model', 'accuracy', 'f1','rocauc'])
+    preds2 = df["Pred"] > 0.5 # Get the binary predictions instead of predicted probability
+    trues2 = df["True"] > 0.5 # Get the binary values for the classification problem
+    results = evaluate(preds2, trues2, df["Pred"]) # Calculate accuracy, f1 score, and rocauc scores 
+
+    results = pd.DataFrame({'model': [model], 'accuracy': [results[0]],
+                            'f1': [results[1]], 'rocauc': [results[2]]})
+
+    results.to_csv("{}-{}-Metrics-{}.csv".format(prop, model, 1), index = False)
+        
+        
+        
+        
+###################################################
+### Compare to Traditional Approaches - 3x10 CV ###
+###################################################
+
+models = [Trad_RandomForest(), Trad_ChemProp(), Trad_XGBoost(), DeltaClassifierLite(), DeepDeltaClassifier()]
 
 for prop in properties:
   for model in models:
