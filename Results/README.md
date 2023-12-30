@@ -29,3 +29,6 @@
 
 #### Cross_Validation_Metrics_Per_Dataset.xlsx
 * Provides Accuracy, F1-Score, and ROCAUC for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for all models. 
+
+#### Cross_Validation_Metrics_Per_Dataset_Repeats.xlsx
+* Provides Accuracy, F1-Score, and ROCAUC for 3x10-fold cross-validation on 230 cross-merged benchmarking datasets for 5 models. 
