@@ -3,7 +3,7 @@
 
 ## Overview
 
-Much of the currently available biological data is inexact ("less than and greater than gators") and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this inexact data for classification. We present DeltaClassifier, a machine learning method that directly trains upon and learns molecular changes to classify molecular improvements leveraging these inexact datapoints. Across 230 small IC50 datasets, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches for the prediction of molecular improvements.   
+Much of the currently available biological data is bounded ("less than and greater than gators") and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this bounded data for classification. We present DeltaClassifier, a machine learning method that directly trains upon and learns molecular changes to classify potency improvements leveraging these bounded datapoints. Across 230 small IC50 datasets, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches for the prediction of potency improvements.   
 
 ## Requirements
 * [RDKit](https://www.rdkit.org/docs/Install.html)
