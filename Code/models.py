@@ -55,7 +55,7 @@ class Trad_RandomForest(abstractDeltaModel):
         paired_predictions = classify_improvement_CTRL_normalized(data)
         return paired_predictions
 
-    def name(self, demilitarization, only_equals):
+    def name(self, demilitarization=-1, only_equals=False):
         return "RandomForest"
         
         
@@ -134,7 +134,7 @@ class Trad_ChemProp(abstractDeltaModel):
         return paired_predictions
 
 
-    def name(self, demilitarization, only_equals):
+    def name(self, demilitarization=-1, only_equals=False):
         return "ChemProp" + str(self.epochs)
         
         
@@ -165,7 +165,7 @@ class Trad_XGBoost(abstractDeltaModel):
         paired_predictions = classify_improvement_CTRL_normalized(data)
         return paired_predictions
 
-    def name(self, demilitarization, only_equals):
+    def name(self, demilitarization=-1, only_equals=False):
         return "XGBoost" 
         
 
