@@ -47,7 +47,7 @@ class Trad_RandomForest(abstractDeltaModel):
         predictions = pd.DataFrame(self.model.predict(fps)) # Predict using traditional methods
         return predictions
 
-    def classify_improvement(self, x, relation, y, predictions): # Used for prediction so we want to keep all pairs
+    def classify_improvement(self, x, relation, y, predictions):
         cleanedx = [i for i in x if str(i) != 'nan']
         cleanedrelation = [i for i in relation if str(i) != 'nan']
         cleanedy = [i for i in y if str(i) != 'nan']
@@ -71,10 +71,9 @@ class Trad_ChemProp(abstractDeltaModel):
 
     def fit(self, x, relation, y, demilitarization, only_equals, metric='r2'):
         self.dirpath_single = tempfile.NamedTemporaryFile().name # use temporary file to store model
-
         data = pd.DataFrame(np.transpose(np.vstack([x,relation,y])),columns=["X",'Relation',"Y"])
         data = data[data['Relation'] == '='] # Remove any values that are not exact
-        data = data[['X', 'Y']]# Remove the relation column
+        data = data[['X', 'Y']] # Remove the relation column
 
         train = pd.DataFrame(data)
 
@@ -127,11 +126,11 @@ class Trad_ChemProp(abstractDeltaModel):
 
         return predictions
 
-    def classify_improvement(self, x, relation, y, predictions): # Used for prediction so we want to keep all pairs
 
+    
+    def classify_improvement(self, x, relation, y, predictions): 
         data = pd.DataFrame(np.transpose(np.vstack([x,relation,y,predictions])),columns=["SMILES",'Relation',"Value","Predictions"])
         paired_predictions = classify_improvement_CTRL_normalized(data)
-
         return paired_predictions
 
 
@@ -143,8 +142,7 @@ class Trad_XGBoost(abstractDeltaModel):
     model = None
 
     def __init__(self):
-        #self.model = XGBRegressor(tree_method='gpu_hist') # ADD BACK INTO REAL CODE!!!!
-        self.model = XGBRegressor()
+        self.model = XGBRegressor(tree_method='gpu_hist') 
 
     def fit(self, x, relation, y, demilitarization, only_equals, metric='r2'):
         data = pd.DataFrame({'X': x, 'Relation': relation,'Y': y})
@@ -159,7 +157,7 @@ class Trad_XGBoost(abstractDeltaModel):
         predictions = pd.DataFrame(self.model.predict(fps)) # Predict using traditional methods
         return predictions
 
-    def classify_improvement(self, x, relation, y, predictions): # Used for prediction so we want to keep all pairs
+    def classify_improvement(self, x, relation, y, predictions):
         cleanedx = [i for i in x if str(i) != 'nan']
         cleanedrelation = [i for i in relation if str(i) != 'nan']
         cleanedy = [i for i in y if str(i) != 'nan']
@@ -175,8 +173,7 @@ class DeltaClassifierLite(abstractDeltaModel):
     model = None
 
     def __init__(self):
-        #self.model = XGBRegressor(tree_method='gpu_hist') # ADD BACK INTO REAL CODE!!!!
-        self.model = XGBRegressor()
+        self.model = XGBRegressor(tree_method='gpu_hist') 
 
     def fit(self, x, relation, y, demilitarization, only_equals):
         data = pd.DataFrame({'SMILES': x, 'Relation': relation,'Value': y})
@@ -194,7 +191,7 @@ class DeltaClassifierLite(abstractDeltaModel):
 
         self.model.fit(np.vstack(train.fps.to_numpy()), train.Y) # Fit using traditional methods
 
-    def classify_improvement(self, x, relation, y):
+    def classify_improvement(self, x, relation, y): # Used for prediction so we want to keep all pairs
         data = pd.DataFrame({'SMILES': x, 'Relation': relation,'Value': y})
         data2 = classify_pair_improvement(data, demilitarization=-1, only_equals=False)
         return data2
@@ -266,12 +263,9 @@ class DeepDeltaClassifier(abstractDeltaModel):
 
 
     def classify_improvement(self, x, relation, y): # Used for prediction so we want to keep all pairs
-        # create pairs of training data
         data = pd.DataFrame(np.transpose(np.vstack([x,relation,y])),columns=["SMILES",'Relation',"Value"])
         dataset = classify_pair_improvement(data, demilitarization=-1, only_equals=False)
-
         return dataset
-
 
 
     def predict(self, dataset):
@@ -307,6 +301,8 @@ class DeepDeltaClassifier(abstractDeltaModel):
           return "DeepDeltaClassifier" + str(self.epochs)
         else:
           return "DeepDeltaClassifierDemil" + str(demilitarization) + 'OnlyEquals' + str(only_equals) + str(self.epochs)
+
+
 
 
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
@@ -403,10 +399,14 @@ def classify_pair_improvement(data, demilitarization=-1, only_equals=False):
   data3.index = range(len(data3)) # Reindex
   data3['Y'] = data3['Y'].astype('int') # Ensure values are interpreted as integers
   return data3
-  
+
+
+
+
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
 # This version specifically gives predictive confidence based on how large the differences are
-def classify_improvement_CTRL_normalized(data): # Used for the Random Forest, ChemProp, and XGBoost models
+# Used for the Traditional Random Forest, ChemProp, and XGBoost models
+def classify_improvement_CTRL_normalized(data): 
   data2 = pd.merge(data, data, how='cross') # Make Pairs
   data3 = pd.DataFrame(columns=['Predictions'], index=range(len(data2))) # For final results
 
