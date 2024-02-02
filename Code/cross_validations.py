@@ -36,14 +36,14 @@ def cross_validation(x, relation, y, prop, model, k=10, seed=1, demilitarization
 
   for train, test in kf.split(x):
       model.fit(x[train], relation[train], y[train], demilitarization, only_equals) # Fit on training data
-      if model.name(demilitarization = 0.1, only_equals = False) == 'XGBoost' or model.name(demilitarization = 0.1, only_equals = False) == 'RandomForest' or model.name(demilitarization = 0.1, only_equals = False) == 'ChemProp50': # Traditional models
-        preds = np.append(preds, model.classify_improvement(x[test], relation[test], y[test], model.predict(x[test], y[test]))) # Predict on testing data
+      if model.name(demilitarization = 0.1, only_equals = False) == 'XGBoost' or model.name(demilitarization = 0.1, only_equals = False) == 'RandomForest' or model.name(demilitarization = 0.1, only_equals = False) == 'ChemProp50': 
+        preds = np.append(preds, model.classify_improvement(x[test], relation[test], y[test], model.predict(x[test], y[test]))) # Predict on testing data for traditional models
       else: # Using a DeltaClassifier model
         preds = np.append(preds, model.predict(model.classify_improvement(x[test], relation[test], y[test]))) # Predict on testing data
 
-      # Get true values
+      # Get true potency differences of the molecular pairs 
       data = pd.DataFrame(np.transpose(np.vstack([x[test],relation[test],y[test]])),columns=["SMILES",'Relation',"Value"])
-      dataset = classify_pair_improvement(data, demilitarization=-1, only_equals=False) # Function to cross-merge and collapse regression into classification
+      dataset = classify_pair_improvement(data, demilitarization=-1, only_equals=False) # apply for all possible pairs
       vals = np.append(vals, dataset['Y']) # Add predictions to the values
 
   return [vals,preds] # Return true delta values and predicted delta values
@@ -300,9 +300,9 @@ properties = ["CHEMBL4561",
 ### Training Optimization for DeltaClassifiers - 1x10 CV ###
 ############################################################
 
-training_approaches = [(0.1, False), (-1, False), (-1, True)] # Set for our standard demilitarization, all data, and only equals training
 # training_approaches contains the demilitarization value and the whether or not we are training on only equals
 # A demilitarization value of -1 ensures that there is no demilitarization
+training_approaches = [(0.1, False), (-1, False), (-1, True)] # Set for training with our standard demilitarization, all data, and only equals training
 
 models = [DeltaClassifierLite(), DeepDeltaClassifier()]
 
