@@ -41,7 +41,7 @@ class Trad_RandomForest(abstractDeltaModel):
         fps = [np.array(AllChem.GetMorganFingerprintAsBitVect(m,2)) for m in mols]
         self.model.fit(fps,data['Y']) # Fit using traditional methods
 
-    def predict(self, x, y):
+    def predict(self, x):
         mols = [Chem.MolFromSmiles(s) for s in x]
         fps = [np.array(AllChem.GetMorganFingerprintAsBitVect(m,2)) for m in mols]
         predictions = pd.DataFrame(self.model.predict(fps)) # Predict using traditional methods
@@ -101,7 +101,7 @@ class Trad_ChemProp(abstractDeltaModel):
         temp_datafile.close()
 
 
-    def predict(self, x, y):
+    def predict(self, x):
 
         dataset = pd.DataFrame(x)
 
@@ -151,7 +151,7 @@ class Trad_XGBoost(abstractDeltaModel):
         fps = [np.array(AllChem.GetMorganFingerprintAsBitVect(m,2)) for m in mols]
         self.model.fit(fps,data['Y']) # Fit using traditional methods
 
-    def predict(self, x, y):
+    def predict(self, x):
         mols = [Chem.MolFromSmiles(s) for s in x]
         fps = [np.array(AllChem.GetMorganFingerprintAsBitVect(m,2)) for m in mols]
         predictions = pd.DataFrame(self.model.predict(fps)) # Predict using traditional methods
