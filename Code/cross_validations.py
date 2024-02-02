@@ -37,7 +37,7 @@ def cross_validation(x, relation, y, prop, model, k=10, seed=1, demilitarization
   for train, test in kf.split(x):
       model.fit(x[train], relation[train], y[train], demilitarization, only_equals) # Fit on training data
       if model.name(demilitarization = 0.1, only_equals = False) == 'XGBoost' or model.name(demilitarization = 0.1, only_equals = False) == 'RandomForest' or model.name(demilitarization = 0.1, only_equals = False) == 'ChemProp50': 
-        preds = np.append(preds, model.classify_improvement(x[test], relation[test], y[test], model.predict(x[test], y[test]))) # Predict on testing data for traditional models
+        preds = np.append(preds, model.classify_improvement(x[test], relation[test], y[test], model.predict(x[test]))) # Predict on testing data for traditional models
       else: # Using a DeltaClassifier model
         preds = np.append(preds, model.predict(model.classify_improvement(x[test], relation[test], y[test]))) # Predict on testing data
 
