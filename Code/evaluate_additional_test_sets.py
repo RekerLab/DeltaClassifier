@@ -23,7 +23,7 @@ from imblearn.metrics import sensitivity_specificity_support
 
 
 # Function to make pairs, determine if the pair improves or not, and remove values where this is unknown
-def classify_improvement_scaffolds_keep_relation_keep_values(data): # Specific version that also keeps relations and true values
+def classify_improvement_scaffolds_keep_relation_keep_values(data): # Specific version that also returns scaffolds, relations, and true values
   data2 = pd.merge(data, data, how='cross') # Make Pairs
   data3 = pd.DataFrame(columns=['SMILES_x', 'SMILES_y', 'Scaffold_x', 'Scaffold_y', 'Value_x', 'Value_y', 'Relation_x', 'Relation_y', 'Y'], index=range(len(data2))) # For final results
 
@@ -145,10 +145,6 @@ def classify_improvement_scaffolds_keep_relation_keep_values(data): # Specific v
   data3.index = range(len(data3)) # Reindex
   data3['Y']=data3['Y'].astype('int') # Ensure values are interpreted as integers
   return data3
-
-#######################
-### SMILES Analysis ###
-#######################
 
 properties = ["CHEMBL4561",
 "CHEMBL202",
@@ -395,14 +391,13 @@ for model in models:
     all_scores_Gatorless_demilitarized = pd.DataFrame(columns=['Dataset', 'Accuracy', 'F1', 'AUC']) 
 
 
-    # Evaluate scoring without same molecular pairs for all Datasets
     for name in properties:
         dataframe = pd.read_csv("../Datasets/{}-Curated.csv".format(name))
         predictions = pd.read_csv('../Results/{}/{}_1/{}_{}_1.csv'.format(model, model, name, model)).T 
         predictions.columns =['True', 'Delta']
 
-        mols = [Chem.MolFromSmiles(s) for s in dataframe.SMILES]
-        scaffolds = [Chem.MolToSmiles(MurckoScaffold.GetScaffoldForMol(m)) for m in mols]
+        mols = [Chem.MolFromSmiles(s) for s in dataframe.SMILES] # Get molecules from SMILES
+        scaffolds = [Chem.MolToSmiles(MurckoScaffold.GetScaffoldForMol(m)) for m in mols] # Get scaffolds from molecules
         data = pd.DataFrame(data={'SMILES': mols, 'Scaffold': scaffolds, 'Relation': dataframe['Relation'], 'Value': dataframe['Value']})
 
         # Emulate previous train-test splits (Only need the test split so the train will be ignored)
@@ -446,7 +441,9 @@ for model in models:
         DeltaClass = [float(i) for i in DeltaClass]
         datapoints['DeltaClass'] = DeltaClass
 
-        # Demilitarize all the datapoints
+
+      
+        # Get the demilitarized datapoints
         demilitarized = datapoints.drop(datapoints[abs(datapoints['Value_x'] - datapoints['Value_y']) < 0.1].index)
 
         # Run Stats
@@ -459,7 +456,9 @@ for model in models:
 
         all_scores_demilitarized = pd.concat([all_scores_demilitarized, scoring])
 
-        # Exclude all same molecule pairs
+
+      
+        # Get all datapoints except same molecule pairs
         No_SMP = datapoints[datapoints['SMILES_X'] != datapoints['SMILES_Y']]
 
         # Run Stats
@@ -486,7 +485,9 @@ for model in models:
         all_scores_Gatorless = pd.concat([all_scores_Gatorless, scoring])
 
 
-        # Only keep demilitarized nonmatching scaffolds
+
+      
+        # Get only demilitarized nonmatching scaffolds
         nonmatching_demilitarized = demilitarized[demilitarized['Scaffold_x'] != demilitarized['Scaffold_y']]
 
         # Run Stats
@@ -500,7 +501,9 @@ for model in models:
         nonmatching_scaffolds_demilitarized = pd.concat([nonmatching_scaffolds_demilitarized, scoring])
 
 
-        # Only keep demilitarized matching scaffolds
+
+      
+        # Get only demilitarized matching scaffolds
         matching_demilitarized = demilitarized[demilitarized['Scaffold_x'] == demilitarized['Scaffold_y']]
 
         # Run Stats
@@ -528,9 +531,11 @@ for model in models:
         all_scores_Gatorless_demilitarized = pd.concat([all_scores_Gatorless_demilitarized, scoring])
 
 
-    all_scores_demilitarized.to_csv("{}_Demilitarized.csv".format(model), index = False) # Save general demilitarized results
+  
+
+    all_scores_demilitarized.to_csv("{}_Demilitarized.csv".format(model), index = False) # Save demilitarized results
     all_scores_no_same_molecule_pairs.to_csv("{}_No_SMP.csv".format(model), index = False) # Save results with no same molecule pairs
     all_scores_Gatorless.to_csv("{}_No_SMP_Gatorless.csv".format(model), index = False) # Save gatorless (only exact) results with no same molecule pairs
-    nonmatching_scaffolds_demilitarized.to_csv("{}_nonmatching_scaffolds_demilitarized.csv".format(model), index = False) # Save Non-matching Scaffolds following demilitarization
-    matching_scaffolds_demilitarized.to_csv("{}_matching_scaffolds_demilitarized.csv".format(model), index = False) # Save matching Scaffolds following demilitarization
+    nonmatching_scaffolds_demilitarized.to_csv("{}_nonmatching_scaffolds_demilitarized.csv".format(model), index = False) # Save non-matching Scaffolds following demilitarization
+    matching_scaffolds_demilitarized.to_csv("{}_matching_scaffolds_demilitarized.csv".format(model), index = False) # Save matching scaffolds following demilitarization
     all_scores_Gatorless_demilitarized.to_csv("{}_demilitarized_Gatorless.csv".format(model), index = False) # Save gatorless (only exact) results with demilitarization
