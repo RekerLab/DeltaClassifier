@@ -1,9 +1,18 @@
 
-![DeltaClassifier](https://github.com/RekerLab/DeltaClassifier/assets/127516906/bb265317-43a7-462d-aed1-7371dac2bb84)
+![DeltaClassifierSimple](https://github.com/RekerLab/DeltaClassifier/assets/127516906/d0e68a7c-5ea0-418a-b41c-e1eae837958c)
+
 
 ## Overview
 
-Much of the currently available biological data is bounded ("less than and greater than gators") and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this bounded data for classification. We present DeltaClassifier, a machine learning method that directly trains upon and learns molecular changes to classify potency improvements leveraging these bounded datapoints. Across 230 small IC50 datasets, both tree-based and neural network-based DeltaClassifiers show significant improvement over traditional regression approaches for the prediction of potency improvements.   
+A substantial amount of inhibition data is bounded and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this bounded data for classification. We present DeltaClassifier, a novel molecular pairing approach to process this data. This creates a new classification task of predicting which one of two paired molecules is more potent. This novel classification task can be accurately solved by various, established molecular machine learning algorithms, including XGBoost and Chemprop. Across 230 ChEMBL IC50 datasets, both tree-based and neural network-based “DeltaClassifiers” show improvements over traditional regression approaches in correctly classifying molecular potency improvements. 
+
+The associated publication is currently under review. 
+
+If you use the MPNN-based implementation, please also kindly cite: Vermeire, F. H., & Green, W. H. (2021). Transfer learning for solvation free energies: From quantum chemistry to experiments. Chemical Engineering Journal, 418, 129307.
+
+If you use the tree-based implementation, please also kindly cite: Mitchell, R., & Frank, E. (2017). Accelerating the XGBoost algorithm using GPU computing. PeerJ Computer Science, 3, e127.
+
+We would like to thank the Chemprop and the Scikit-learn developers for making their machine learning algorithms publicly available. 
 
 ## Requirements
 * [RDKit](https://www.rdkit.org/docs/Install.html)
