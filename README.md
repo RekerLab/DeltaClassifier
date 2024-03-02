@@ -8,10 +8,6 @@ A substantial amount of inhibition data is bounded and inaccessible to tradition
 
 The associated publication is currently under review. 
 
-If you use the MPNN-based implementation, please also kindly cite: Vermeire, F. H., & Green, W. H. (2021). Transfer learning for solvation free energies: From quantum chemistry to experiments. Chemical Engineering Journal, 418, 129307.
-
-If you use the tree-based implementation, please also kindly cite: Mitchell, R., & Frank, E. (2017). Accelerating the XGBoost algorithm using GPU computing. PeerJ Computer Science, 3, e127.
-
 We would like to thank the Chemprop and the Scikit-learn developers for making their machine learning algorithms publicly available. 
 
 ## Requirements
