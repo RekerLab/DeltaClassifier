@@ -16,14 +16,14 @@ We would like to thank the Chemprop and the Scikit-learn developers for making t
 * [numpy](https://numpy.org/)
 * [pandas](https://github.com/pandas-dev/pandas)
 
-Comparison Models
+Machine Learning Models
 * [Random Forest](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html)
-* [ChemProp v1.5.2](https://github.com/chemprop/chemprop)
+* [Chemprop v1.5.2](https://github.com/chemprop/chemprop)
 * [XGBoost](https://xgboost.readthedocs.io/en/stable/gpu/index.html)
 
 Given the larger size of delta datasets, we recommend using a GPU for significantly faster training.
 
-To use ChemProp with GPUs, you will need:
+To use Chemprop with GPUs, you will need:
 * cuda >= 8.0
 * cuDNN
 
