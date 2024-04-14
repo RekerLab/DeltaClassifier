@@ -11,14 +11,10 @@ from rdkit.Chem import AllChem
 
 import sklearn
 import sklearn.metrics as metrics
-from sklearn.metrics import matthews_corrcoef as mcc
 from sklearn.metrics import accuracy_score as accuracy
 from sklearn.metrics import f1_score
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import balanced_accuracy_score as bac
-from sklearn.metrics import fbeta_score, make_scorer
 from sklearn.metrics import roc_auc_score as rocauc
-from imblearn.metrics import sensitivity_specificity_support
+
 
 from scipy import stats as stats
 from sklearn.model_selection import KFold
@@ -57,8 +53,6 @@ def cross_validation_file(data_path, prop, model, k=10, seed=1, demilitarization
   return cross_validation(x,relation,y,prop,model,k,seed,demilitarization,only_equals)
 
 def evaluate(pred_vals,true_vals,pred_prob): # Calculate accuracy, f1 score, and rocauc scores
-	tn, fp, fn, tp = confusion_matrix(true_vals, pred_vals).ravel()
-	sensitivity, specificity, _ = sensitivity_specificity_support(true_vals, pred_vals,labels=[1],average='binary')
 	return [accuracy(true_vals,pred_vals),
 	f1_score(true_vals,pred_vals),
 	rocauc(true_vals,pred_prob)]

@@ -42,7 +42,7 @@ Python code for evaluating DeltaClassifers and traditional models based on their
 
 ### Results
 
-Results from 3x10-fold cross-validation.
+Results from 3x10-fold cross-validation and 80-20 scaffold split.
 
 <br />
 

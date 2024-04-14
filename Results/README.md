@@ -1,5 +1,8 @@
 ## Cross Validation Results
 
+#### AdversarialAttacks
+* Provides results for 1x10-fold cross-validation on 230 cross-merged benchmarking datasets for DeepDeltaClassifier and DeltaClassifierLite following Y-shuffling.
+
 #### ChemProp50
 * Provides results for 3x10-fold cross-validation on 230 cross-merged benchmarking datasets for ChemProp with 50 epochs.
 
@@ -23,6 +26,9 @@
 
 #### RandomForest
 * Provides results for 3x10-fold cross-validation on 230 cross-merged benchmarking datasets for Random Forest.
+
+#### ScaffoldSplit
+* Provides results for 80-20 Scaffold Split results on 230 cross-merged benchmarking datasets for five models.
 
 #### XGBoost
 * Provides results for 3x10-fold cross-validation on 230 cross-merged benchmarking datasets for XGBoost.
