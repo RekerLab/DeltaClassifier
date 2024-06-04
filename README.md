@@ -6,7 +6,9 @@
 
 A substantial amount of inhibition data is bounded and inaccessible to traditional regression algorithms, but pairing regression datapoints and comparing potency values can leverage this bounded data for classification. We present DeltaClassifier, a novel molecular pairing approach to process this data. This creates a new classification task of predicting which one of two paired molecules is more potent. This novel classification task can be accurately solved by various, established molecular machine learning algorithms, including XGBoost and Chemprop. Across 230 ChEMBL IC50 datasets, both tree-based and neural network-based “DeltaClassifiers” show improvements over traditional regression approaches in correctly classifying molecular potency improvements. 
 
-The associated publication is currently under review. 
+For more information, please refer to the [associated publication](https://pubs.rsc.org/en/content/articlelanding/2024/md/d4md00325j#cit11)
+
+If you use this data or code, please kindly cite: Fralish, Z., Skaluba, P., & Reker, D. (2024). Leveraging bounded datapoints to classify molecular potency improvements. RSC Med Chem.
 
 We would like to thank the Chemprop and the Scikit-learn developers for making their machine learning algorithms publicly available. 
 
