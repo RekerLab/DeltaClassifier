@@ -10,7 +10,7 @@ For more information, please refer to the [associated publication](https://pubs.
 
 If you use this data or code, please kindly cite: Fralish, Z., Skaluba, P., & Reker, D. (2024). Leveraging bounded datapoints to classify molecular potency improvements. RSC Med Chem.
 
-We would like to thank the Chemprop and the Scikit-learn developers for making their machine learning algorithms publicly available. 
+We would like to thank the Chemprop, XGBoost, and the Scikit-learn developers for making their machine learning algorithms publicly available. 
 
 ## Requirements
 * [RDKit](https://www.rdkit.org/docs/Install.html)
