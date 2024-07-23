@@ -46,6 +46,10 @@ Python code for evaluating DeltaClassifers and traditional models based on their
 
 Results from 3x10-fold cross-validation and 80-20 scaffold split.
 
+### Command_Line_Implementation
+
+Provides shell scripts to run directly from the command line.
+
 <br />
 
 ## License
