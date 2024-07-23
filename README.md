@@ -38,6 +38,10 @@ To use Chemprop with GPUs, you will need:
 
 Python code for evaluating DeltaClassifers and traditional models based on their ability to classify potency differences between two molecules.
 
+### Command_Line_Implementation
+
+Provides shell scripts to run directly from the command line.
+
 ### Datasets
 
 230 curated training sets for potency prediction from [ChEMBL](https://www.ebi.ac.uk/chembl/).
@@ -45,10 +49,6 @@ Python code for evaluating DeltaClassifers and traditional models based on their
 ### Results
 
 Results from 3x10-fold cross-validation and 80-20 scaffold split.
-
-### Command_Line_Implementation
-
-Provides shell scripts to run directly from the command line.
 
 <br />
 
