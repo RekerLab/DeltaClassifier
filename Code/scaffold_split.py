@@ -25,13 +25,13 @@ from models import *
 
 
 
-def scaffold_split(x, relation, y, prop, model, k=10, seed=1, demilitarization=-1, only_equals=False): # provide option to scaffold split with x and y instead of file
+def scaffold_split(x, relation, y, prop, model, frac_train=0.8, seed=1, demilitarization=-1, only_equals=False): # provide option to scaffold split with x and y instead of file
   preds = []
   vals  = []
   
   dataset = dc.data.DiskDataset.from_numpy(X=relation,y=y,ids=x)
   scaffoldsplitter = dc.splits.ScaffoldSplitter()
-  train,test = scaffoldsplitter.train_test_split(dataset,frac_train=0.8, seed=1)
+  train,test = scaffoldsplitter.train_test_split(dataset,frac_train=frac_train, seed=seed)
 
   model.fit(train.ids, train.X, train.y, demilitarization, only_equals) # Fit on training data
   if model.name(demilitarization = 0.1, only_equals = False) == 'XGBoost' or model.name(demilitarization = 0.1, only_equals = False) == 'RandomForest' or model.name(demilitarization = 0.1, only_equals = False) == 'ChemProp50': 
@@ -47,12 +47,12 @@ def scaffold_split(x, relation, y, prop, model, k=10, seed=1, demilitarization=-
   return [vals,preds] # Return true delta values and predicted delta values
 
 
-def scaffold_split_file(data_path, prop, model, k=10, seed=1, demilitarization=-1, only_equals=False): # Scaffold split from a file
+def scaffold_split_file(data_path, prop, model, frac_train=0.8, seed=1, demilitarization=-1, only_equals=False): # Scaffold split from a file
   df = pd.read_csv(data_path)
   x = df[df.columns[0]]
   relation = df[df.columns[1]]
   y = df[df.columns[2]]
-  return scaffold_split(x,relation,y,prop,model,k,seed,demilitarization,only_equals)
+  return scaffold_split(x,relation,y,prop,model,frac_train,seed,demilitarization,only_equals)
 
 def evaluate(pred_vals,true_vals,pred_prob): # Calculate accuracy, f1 score, and rocauc scores
 	return [accuracy(true_vals,pred_vals),
@@ -301,7 +301,7 @@ models = [Trad_RandomForest(), Trad_ChemProp(), Trad_XGBoost(), DeltaClassifierL
 for prop in properties:
   for model in models:
     dataset = '../Datasets/{}-Curated.csv'.format(prop)
-    results = scaffold_split_file(data_path=dataset, prop = prop, model=model, k=10, seed = 1, demilitarization = 0.1, only_equals = False)
+    results = scaffold_split_file(data_path=dataset, prop = prop, model=model, frac_train=0.8, seed = 1, demilitarization = 0.1, only_equals = False)
 
     pd.DataFrame(results).to_csv("{}_{}_Scaffold-Split-{}.csv".format(prop, model.name(demilitarization = 0.1, only_equals = False), 1), index=False)
     # If you .T the dataframe, then the first column is ground truth, the second is predictions
