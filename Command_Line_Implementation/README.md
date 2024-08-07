@@ -9,5 +9,6 @@
 #### cross_validations_array.sh
 * In this one, we indicate the directory where the files are, move to that directory, and then call the python file using all datasets that end in ‘-Curated.csv’. To call this from the command line in Linux, you would type ‘bash [shellscript.sh] [pythonscript.py] [directory]’ for example ‘bash cross_validations_array.sh cross_validations_array.py home/user/chemprop’. 
 
-
+#### external_test.sh
+* This script fits the Chemprop model on the entire training dataset using the DeltaClassifier approach and then it predicts on an external test set (that must be pairs of molecules) and adds predictions that compares the two molecules. Within the script, you can specific the training and testing data names.
 
