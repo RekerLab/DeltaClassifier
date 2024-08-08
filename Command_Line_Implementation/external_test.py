@@ -25,18 +25,18 @@ from models import *
 
 # Adjustable Parameters
 model = DeepDeltaClassifier()
-training_data = 'CHEMBL202.csv'
-testing_data = 'CHEMBL202_ext.csv'
+training_data = 'CHEMBL202'
+testing_data = 'CHEMBL202_ext'
 
 # Fit model on entire training dataset
-df = pd.read_csv(training_data)
+df = pd.read_csv('{}.csv'.format(training_data))
 x = df[df.columns[0]]
 relation = df[df.columns[1]]
 y = df[df.columns[2]]
 model.fit(x,relation, y, 0.1, False) 
 
 # Predict on external test set
-df_pred = pd.read_csv(testing_data)
-df_pred['Pred_Y'] = model.predict(df) # Make predictions      
-df_pred.to_csv("{}_{}_ExtTestSet.csv".format(prop, model), index=False) # Save results
+df_pred = pd.read_csv('{}.csv'.format(testing_data))
+df_pred['Pred_Y'] = model.predict(df_pred) # Make predictions     
+df_pred.to_csv("{}_train_{}_predict.csv".format(training_data, testing_data), index=False) # Save results
 
